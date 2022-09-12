@@ -2,13 +2,20 @@
 // il reducer prende lo stato attuale dell'app, controlla l'azione che è
 // stata appena dispatchata e genere il nuovo stato dell'applicativo
 
-import { ADD_TO_CART, REMOVE_FROM_CART } from '../actions'
+import { ADD_TO_CART, REMOVE_FROM_CART, SET_USERNAME } from '../actions'
 
 // ma da dove cominciamo? qual è lo stato iniziale?
+
+// ora dobbiamo "nascondere" le funzionalità del carrello agli utenti non ancora loggati...
 
 const initialState = {
   cart: {
     content: [],
+  },
+  // creo una nuova "slice" per l'utente
+  user: {
+    name: '', // qui dentro salverò lo user name in modo da sbloccare all'utente
+    // le funzionalità del cart
   },
 }
 
@@ -43,6 +50,15 @@ const mainReducer = (state = initialState, action) => {
           //       state.cart.content.length
           //     ),
           //   ],
+        },
+      }
+
+    case SET_USERNAME:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          name: action.payload, // non c'è rischio di alterare lo stato esistente
         },
       }
 

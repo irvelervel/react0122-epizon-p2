@@ -11,6 +11,7 @@ const mapStateToProps = (state) => {
     cartLength: state.cart.content.length,
     // ogni proprietà di questo oggetto diventa una prop aggiuntiva del
     // vostro componente
+    userName: state.user.name,
   }
 }
 
@@ -29,7 +30,9 @@ class Footer extends Component {
     return (
       <footer className="epizon-footer">
         <span className="text-muted">Epizon {new Date().getFullYear()}©</span>
-        <div>{this.props.cartLength}</div>
+        <div>
+          {this.props.cartLength} - {this.props.userName}
+        </div>
       </footer>
     )
   }

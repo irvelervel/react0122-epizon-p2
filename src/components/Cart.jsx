@@ -1,7 +1,7 @@
 import { Col, Row, Button } from 'react-bootstrap'
 import { FaTrash } from 'react-icons/fa'
 import { useSelector, useDispatch } from 'react-redux'
-import { REMOVE_FROM_CART } from '../redux/actions'
+import { removeFromCartAction } from '../redux/actions'
 
 const Cart = () => {
   const cartContent = useSelector((state) => state.cart.content)
@@ -17,10 +17,7 @@ const Cart = () => {
               <Button
                 variant="danger"
                 onClick={() => {
-                  dispatch({
-                    type: REMOVE_FROM_CART,
-                    payload: i,
-                  })
+                  dispatch(removeFromCartAction(i))
                 }}
               >
                 <FaTrash />

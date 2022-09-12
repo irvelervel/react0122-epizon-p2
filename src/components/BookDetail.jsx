@@ -1,9 +1,12 @@
-import { Col, Row, Button } from 'react-bootstrap'
-import { useDispatch } from 'react-redux'
+import { Col, Row, Button, Alert } from 'react-bootstrap'
+import { useDispatch, useSelector } from 'react-redux'
 import { addToCartAction } from '../redux/actions'
 
 const BookDetail = ({ bookSelected }) => {
   const dispatch = useDispatch()
+
+  const userName = useSelector((state) => state.user.name)
+  // userName all'avvio è ''; in questo caso devo NASCONDERE il bottone "add to cart"
 
   return (
     <div className="mt-3 mb-4 mb-lg-0">
@@ -33,18 +36,24 @@ const BookDetail = ({ bookSelected }) => {
                 <span className="font-weight-bold">Price:</span>&nbsp;
                 {bookSelected.price}$
               </p>
-              <Button
-                color="primary"
-                onClick={() => {
-                  console.log("ora faccio il dispatch di un'action")
-                  dispatch(addToCartAction(bookSelected))
-                  // sto dispatchando un'action creator
-                  // è la stessa cosa che dispatchare l'action
-                  // perchè l'action creator è una funzione che torna l'action
-                }}
-              >
-                ADD TO CART
-              </Button>
+              {userName ? ( // '' è un valore FALSY
+                <Button
+                  color="primary"
+                  onClick={() => {
+                    console.log("ora faccio il dispatch di un'action")
+                    dispatch(addToCartAction(bookSelected))
+                    // sto dispatchando un'action creator
+                    // è la stessa cosa che dispatchare l'action
+                    // perchè l'action creator è una funzione che torna l'action
+                  }}
+                >
+                  ADD TO CART
+                </Button>
+              ) : (
+                <Alert variant="warning">
+                  Log in to add this book to your cart
+                </Alert>
+              )}
             </Col>
           </Row>
         </>
