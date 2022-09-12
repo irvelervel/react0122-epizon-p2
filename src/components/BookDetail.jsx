@@ -1,6 +1,6 @@
 import { Col, Row, Button, Alert } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import { addToCartAction } from '../redux/actions'
+import { addToCartAction, addToCartActionWithThunk } from '../redux/actions'
 
 const BookDetail = ({ bookSelected }) => {
   const dispatch = useDispatch()
@@ -41,7 +41,7 @@ const BookDetail = ({ bookSelected }) => {
                   color="primary"
                   onClick={() => {
                     console.log("ora faccio il dispatch di un'action")
-                    dispatch(addToCartAction(bookSelected))
+                    dispatch(addToCartActionWithThunk(bookSelected))
                     // sto dispatchando un'action creator
                     // è la stessa cosa che dispatchare l'action
                     // perchè l'action creator è una funzione che torna l'action

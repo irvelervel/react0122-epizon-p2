@@ -2,7 +2,7 @@
 // il reducer prende lo stato attuale dell'app, controlla l'azione che è
 // stata appena dispatchata e genere il nuovo stato dell'applicativo
 
-import { SET_USERNAME } from '../actions'
+import { GET_BOOKS, GET_BOOKS_ERROR, GET_BOOKS_LOADING } from '../actions'
 
 // ma da dove cominciamo? qual è lo stato iniziale?
 
@@ -11,6 +11,8 @@ import { SET_USERNAME } from '../actions'
 const initialState = {
   stock: [], // qui dentro salverò lo user name in modo da sbloccare all'utente
   // le funzionalità del cart
+  loading: true,
+  error: false,
 }
 
 // il reducer è una PURE FUNCTION
@@ -20,6 +22,24 @@ const bookReducer = (state = initialState, action) => {
   // da questa funzione, in ogni possibile situazione
   // io devo restituire il NUOVO STATO dell'applicativo
   switch (action.type) {
+    case GET_BOOKS:
+      return {
+        ...state,
+        stock: action.payload, // action.payload è l'array di books
+      }
+
+    case GET_BOOKS_ERROR:
+      return {
+        ...state,
+        error: true,
+      }
+
+    case GET_BOOKS_LOADING:
+      return {
+        ...state,
+        loading: false,
+      }
+
     default:
       return state
     // worst case scenario: torno lo stato come l'ho appena trovato

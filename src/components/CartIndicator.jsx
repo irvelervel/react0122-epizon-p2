@@ -1,4 +1,4 @@
-import { Button, Form } from 'react-bootstrap'
+import { Button, Form, Spinner } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import { FaShoppingCart } from 'react-icons/fa'
 import { useSelector, useDispatch } from 'react-redux'
@@ -16,6 +16,8 @@ const CartIndicator = () => {
   // cartLength inizialmente è 0, ma rispecchierà in qualsiasi momento
   // la lunghezza di cart.content
 
+  const booksLoading = useSelector((state) => state.book.loading)
+
   // const entireState = useSelector(state => state)
   // approccio funzionante ma scomodo e fornisce a CartIndicator
   // anche informazioni che non gli interessano
@@ -31,6 +33,7 @@ const CartIndicator = () => {
     <div className="ml-auto mt-3 mb-4">
       {userName ? (
         <>
+          <span></span>
           <span className="mr-2">Hello, {userName}!</span>
           <Button color="primary" onClick={() => navigate('/cart')}>
             <FaShoppingCart />
@@ -38,16 +41,19 @@ const CartIndicator = () => {
           </Button>
         </>
       ) : (
-        <Form onSubmit={handleSubmit}>
-          <Form.Group>
-            <Form.Control
-              type="text"
-              placeholder="Log in here"
-              value={formValue}
-              onChange={(e) => setFormValue(e.target.value)}
-            />
-          </Form.Group>
-        </Form>
+        <>
+          {booksLoading && <Spinner animation="border" variant="success" />}
+          <Form onSubmit={handleSubmit}>
+            <Form.Group>
+              <Form.Control
+                type="text"
+                placeholder="Log in here"
+                value={formValue}
+                onChange={(e) => setFormValue(e.target.value)}
+              />
+            </Form.Group>
+          </Form>
+        </>
       )}
     </div>
   )
